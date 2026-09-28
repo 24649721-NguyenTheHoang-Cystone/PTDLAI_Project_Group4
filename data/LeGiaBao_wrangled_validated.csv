@@ -1,4 +1,4 @@
-Transaction ID,Transaction Date,Product Name,Quantity,Price,Store Location,Source,Total Sales
+Transaction ID,Transaction Date,Product Name,Quantity,Price,Store Location,Source,Sales Amount
 TXN_1961373,2023-09-08,Coffee,2.0,2.0,Takeaway,Cafe Sales,4.0
 TXN_4977031,2023-05-16,Cake,4.0,3.0,In-store,Cafe Sales,12.0
 TXN_4271903,2023-07-19,Cookie,4.0,1.0,In-store,Cafe Sales,4.0
