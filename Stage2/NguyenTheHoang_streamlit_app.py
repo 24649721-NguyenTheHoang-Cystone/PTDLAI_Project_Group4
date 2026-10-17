@@ -1,3 +1,4 @@
+import io
 import joblib
 import pandas as pd
 import streamlit as st
@@ -129,14 +130,16 @@ with tab4:
             ax.set_xlabel("PC1")
             ax.set_ylabel("PC2")
             ax.legend(*sc.legend_elements(), title="Cụm")
-            st.pyplot(fig)
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png", dpi=100, bbox_inches="tight")
+            st.image(buf, width=480)
         
         with right:
             st.subheader("Đặc điểm từng cụm (không PCA)")
             profile = df.groupby("Cluster_Label")[["Quantity", "Price", "Sales Amount"]].mean().round(2)
             profile.insert(0, "Số giao dịch", df['Cluster_Label'].value_counts().sort_index())
             st.dataframe(profile)
-            
+
         pca_image = BASE / "images" / "pca_variance.png"
         if pca_image.exists():
             st.subheader("Phương sai tích lũy của PCA")
