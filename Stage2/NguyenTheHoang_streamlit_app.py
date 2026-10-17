@@ -23,7 +23,7 @@ st.title("Coffee Sales - Dự đoán và phân cụm giao dịch")
 @st.cache_resource
 def load_models():
     reg = joblib.load(MODEL_DIR / "LeGiaBao_regression_model.pkl")
-    clf = joblib.load(MODEL_DIR / "PhamVietTien_classification_model.pkl")
+    clf = joblib.load(MODEL_DIR / "PhamVietTien_classwification_model.pkl")
     km = joblib.load(MODEL_DIR / "LeDangKhoa_kmeans_model.pkl")
     return reg, clf, km
 
