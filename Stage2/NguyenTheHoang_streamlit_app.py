@@ -115,24 +115,28 @@ with tab4:
     except FileNotFoundError:
         st.warning("Chưa tìm thấy data/LeDangKhoa_clustered.csv")
     else:
-        st.subheader("Các cụm trên PC1 - PC2")
         choice = st.radio("Nhãn cụm", ["Không PCA", "Có PCA"], horizontal=True)
         col = "Cluster_Label" if choice == "Không PCA" else "Cluster_Label_PCA"
-    
-        sample = df.sample(min(10000, len(df)), random_state=42)
-        fig, ax = plt.subplots(figsize=(7, 5))
-        sc = ax.scatter(sample["PC1"], sample["PC2"], c=sample[col], cmap="tab10", s=6, alpha=0.5)
-        ax.set_title(f"K-Means ({choice}) trên 10000 điểm mẫu")
-        ax.set_xlabel("PC1")
-        ax.set_ylabel("PC2")
-        ax.legend(*sc.legend_elements(), title="Cụm")
-        st.pyplot(fig)
 
-        st.subheader("Đặc điểm từng cụm (không PCA)")
-        profile = df.groupby("Cluster_Label")[["Quantity", "Price", "Sales Amount"]].mean().round(2)
-        profile.insert(0, "Số giao dịch", df["Cluster_Label"].value_counts().sort_index())
-        st.dataframe(profile)
-
+        left, right = st.columns([3, 2])
+        
+        with left:
+            st.subheader("Các cụm trên PC1 - PC2")
+            sample = df.sample(min(10000, len(df)), random_state=42)
+            fig, ax = plt.subplots(figsize=(5, 3.4))
+            sc = ax.scatter(sample["PC1"], sample["PC2"], c=sample[col], cmap="tab10", s=5, alpha=0.5)
+            ax.set_title(f"K-Means ({choice}) trên 10.000 điểm mẫu", fontsize=10)
+            ax.set_xlabel("PC1")
+            ax.set_ylabel("PC2")
+            ax.legend(*sc.legend_elements(), title="Cụm")
+            st.pyplot(fig)
+        
+        with right:
+            st.subheader("Đặc điểm từng cụm (không PCA)")
+            profile = df.groupby("Cluster_Label")[["Quantity", "Price", "Sales Amount"]].mean().round(2)
+            profile.insert(0, "Số giao dịch", df['Cluster_Label'].value_counts().sort_index())
+            st.dataframe(profile)
+            
         pca_image = BASE / "images" / "pca_variance.png"
         if pca_image.exists():
             st.subheader("Phương sai tích lũy của PCA")
